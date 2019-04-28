@@ -3,8 +3,7 @@ package org.amarcel.tutorial_spring_cloud.azure
 import java.util.Optional
 import scala.compat.java8.OptionConverters._
 
-import org.amarcel.tutorial_spring_cloud.hello.HelloFunction
-import org.amarcel.tutorial_spring_cloud.hello.{Person, WelcomeMessage}
+import org.amarcel.tutorial_spring_cloud.hello.{HelloFunction, Person, WelcomeMessage}
 import org.springframework.cloud.function.adapter.azure.AzureSpringBootRequestHandler
 
 import com.microsoft.azure.functions.annotation.{AuthorizationLevel, FunctionName, HttpTrigger}
@@ -30,7 +29,11 @@ class HelloAzureFunction
 
     request.getBody.asScala
       .map(person => handleRequest(person, context))
-      .getOrElse(WelcomeMessage("HTTP Body missing, e.g. { \"name\": \"Bob\" }"))
+      .getOrElse({
+        val m = new WelcomeMessage()
+        m.welcomeMessage = "HTTP Body missing, e.g. { \"name\": \"Bob\" }"
+        m
+      })
   }
-
+  
 }

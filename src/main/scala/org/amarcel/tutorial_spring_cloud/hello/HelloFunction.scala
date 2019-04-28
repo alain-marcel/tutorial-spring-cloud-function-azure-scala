@@ -9,8 +9,9 @@ class HelloFunction extends Function[Person, WelcomeMessage] {
 
   @Override
   def apply(person: Person): WelcomeMessage = {
-    val message = s"Welcome ${person.name}"
-    WelcomeMessage(message)
+    val m = new WelcomeMessage()
+    m.welcomeMessage = s"Welcome ${person.name}"
+    m
   }
 }
 
