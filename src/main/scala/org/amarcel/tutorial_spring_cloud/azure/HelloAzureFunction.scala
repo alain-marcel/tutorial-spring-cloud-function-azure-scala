@@ -29,11 +29,7 @@ class HelloAzureFunction
 
     request.getBody.asScala
       .map(person => handleRequest(person, context))
-      .getOrElse({
-        val m = new WelcomeMessage()
-        m.welcomeMessage = "HTTP Body missing, e.g. { \"name\": \"Bob\" }"
-        m
-      })
+      .getOrElse(WelcomeMessage("HTTP Body missing, e.g. { \"name\": \"Bob\" }"))
   }
-  
+
 }
